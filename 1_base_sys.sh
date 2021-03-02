@@ -20,7 +20,7 @@ echo -e "%wheel ALL=(ALL) ALL\n" >> /usr/local/etc/sudoers.d/admin
 pkg install -y xdg-user-dirs
 pkg install -y xorg
 
-KB="/usr/local/etc/X11/xorg.conf.d/keyboard.conf"
+KB='/usr/local/etc/X11/xorg.conf.d/keyboard.conf'
 echo -e 'Section "InputClass"' > $KB
 echo -e '\tIdentifier "KeyboardDefaults"' >> $KB
 echo -e '\tMatchIsKeyboard "on"' >> $KB
