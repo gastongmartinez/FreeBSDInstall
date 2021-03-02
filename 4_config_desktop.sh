@@ -1,10 +1,5 @@
 #!/usr/local/bin/bash
 
-VER UBICACION!!!!!!!!!!!!!!!!
-# Wallpapers
-git clone https://github.com/gastongmartinez/wallpapers.git
-mv wallpapers ~/Pictures
-
 if [ $EUID -eq 0 ];
 then
    echo "Este script debe usarse con un usuario regular."
