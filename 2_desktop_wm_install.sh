@@ -148,7 +148,7 @@ gnome () {
         mkdir -p "$HOMEDIR"/.local/share/gnome-shell/extensions/$UUID
         unzip -q $ARCHIVO -d "$HOMEDIR"/.local/share/gnome-shell/extensions/$UUID/
     done
-    chown -R "$USER":"$USER" "$HOMEDIR"/.local/share/gnome-shell/extensions/
+    chown -R "$USER":"$USER" "$HOMEDIR"/.local/
     rm -rf "$HOMEDIR"/Extensiones/
 }
 ####################################################################################
