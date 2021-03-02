@@ -10,6 +10,7 @@ chown "$USER" "$HOMEDIR/"4_config_desktop.sh
 
 ################################ Wallpapers #####################################
 wallpapers () {
+    echo -e "\nInstalando wallpapers..."
     git clone https://github.com/gastongmartinez/wallpapers.git
     WALL="/usr/local/share/backgrounds/"
     if [[ ! -d "$WALL" ]];
@@ -39,6 +40,37 @@ temasGTK () {
         tar -xf "$TEMA" -C /usr/local/share/themes/
     done
 }
+#################################################################################
+
+############################## Theming ##########################################
+personalizacion () {
+    read -p "Desea instalar temas para la personalizacion del escritorio (S/N): " TEM
+    if [ "${TEM}" == "S" ];
+    then
+        OPCIONES="Wallpapers Iconos TemasGTK Salir"
+        echo -e "\nSeleccione los recursos a instalar:"
+        select OP in $OPCIONES;
+        do
+            if [ $OP == "Wallpapers" ];
+            then
+                sleep 2
+                wallpapers
+            elif [ $OP == "Iconos" ];
+            then
+                sleep 2
+                iconos
+            elif [ $OP == "TemasGTK" ];
+            then
+                sleep 2
+                temasGTK
+            else
+                break
+            fi
+            echo -e "\nSeleccione los recursos a instalar:"
+            REPLY=""
+        done
+    fi
+}   
 #################################################################################
 
 ################# Configuracion General para Desktops ###########################
@@ -227,5 +259,7 @@ menu () {
 config_sys
 
 menu
+
+personalizacion
 
 reboot
