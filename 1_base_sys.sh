@@ -1,4 +1,4 @@
-#!/bin/csh
+#!/bin/sh
 
 # Actualizar Sistema
 freebsd-update fetch
@@ -6,8 +6,8 @@ freebsd-update install
 
 # Instalar y actualizar pkg
 pkg -y
-pkg update
-pkg upgrade
+pkg update -q
+pkg upgrade -y
 
 # Instalar sudo y nano
 pkg install -y sudo
@@ -20,7 +20,7 @@ echo -e "%wheel ALL=(ALL) ALL\n" >> /usr/local/etc/sudoers.d/admin
 pkg install -y xdg-user-dirs
 pkg install -y xorg
 
-KB='/usr/local/etc/X11/xorg.conf.d/keyboard.conf'
+KB="/usr/local/etc/X11/xorg.conf.d/keyboard.conf"
 echo -e 'Section "InputClass"' > $KB
 echo -e '\tIdentifier "KeyboardDefaults"' >> $KB
 echo -e '\tMatchIsKeyboard "on"' >> $KB
