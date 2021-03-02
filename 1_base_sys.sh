@@ -6,8 +6,8 @@ freebsd-update install
 
 # Instalar y actualizar pkg
 pkg -y
-pkg update -q
-pkg upgrade -y
+pkg update
+pkg upgrade
 
 # Instalar sudo y nano
 pkg install -y sudo
