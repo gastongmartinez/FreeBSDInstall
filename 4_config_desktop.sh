@@ -7,6 +7,13 @@ then
    exit 1
 fi
 
+if [ -z $DISPLAY ];
+then
+    echo -e "Debe ejecutarse dentro del entorno grafico.\n"
+    echo "Saliendo..."
+    exit 2
+fi
+
 gnome () {
     # Establecer valores usando gsettings o dconf write
     # gsettings set org.gnome.desktop.interface gtk-theme 'Qogir-manjaro-win-dark'
@@ -229,7 +236,6 @@ do
         sleep 2
         doom
     else
-        echo "Salir"
         break
     fi
     echo -e "\nElija el escritorio a configurar:"
