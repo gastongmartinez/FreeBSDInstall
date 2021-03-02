@@ -8,6 +8,14 @@ chmod +x "$HOMEDIR/"4_config_desktop.sh
 chown "$USER" "$HOMEDIR/"4_config_desktop.sh
 #################################################################################
 
+
+############################### Cambio de shell #################################
+# ROOT
+chsh -s /bin/sh
+# UUID 1001
+chsh -s /usr/local/bin/bash "$USER"
+#################################################################################
+
 ################################ Wallpapers #####################################
 wallpapers () {
     echo -e "\nInstalando wallpapers..."

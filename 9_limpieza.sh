@@ -1,4 +1,11 @@
-#!/usr/local/bin/bash
+#!/bin/sh
+
+if [ "$0" != "sh" ];
+then
+   echo -e "\nEste script debe ser ejecutado como 'sourced'."
+   echo -e "Ejemplo: . 9_limpieza.sh (punto, espacio, nombre script)"
+   exit 1
+fi
 
 VERIF=`pwd | grep FreeBSDInstall`
 if [ -n "$VERIF" ];
@@ -17,7 +24,6 @@ then
         # Eliminar repositorio FreeBSDInstall
         rm -rf "`pwd`"
         cd ~
-        $SHELL
     fi
 else
     echo -e "\nADVERTENCIA!!!\n"
