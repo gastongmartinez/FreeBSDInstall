@@ -1,5 +1,23 @@
 #!/usr/local/bin/bash
 
+############ Archivos de configuracion de entorno de usuario ####################
+HOMEDIR=`grep "1001" /etc/passwd | awk -F : '{ print $6 }'`
+USER=`grep "1001" /etc/passwd | awk -F : '{ print $1 }'`
+mv -f 4_config_desktop.sh "$HOMEDIR"
+chmod +x "$HOMEDIR/"4_config_desktop.sh
+chown "$USER" "$HOMEDIR/"4_config_desktop.sh
+#################################################################################
+
+################################ Wallpapers #####################################
+git clone https://github.com/gastongmartinez/wallpapers.git
+WALL="/usr/local/share/backgrounds/"
+if [[ ! -d "$WALL" ]];
+then
+    mkdir "$WALL"
+fi
+mv -f wallpapers/ "$WALL"
+#################################################################################
+
 ################# Configuracion General para Desktops ###########################
 config_sys () { 
     # Permisos Fuentes
@@ -66,6 +84,17 @@ gnome () {
     echo -e "Name=Set Login Keyboard" >> $KB
     echo -e "Exec=/usr/local/bin/setxkbmap -display :0 'es'" >> $KB
     echo -e "NoDisplay=true" >> $KB
+
+    # Extensiones
+    mv Extensiones "$HOMEDIR/"
+    for ARCHIVO in "$HOMEDIR"/Extensiones/*.zip
+    do
+        UUID=`unzip -c $ARCHIVO metadata.json | grep uuid | cut -d \" -f4`
+        mkdir -p "$HOMEDIR"/.local/share/gnome-shell/extensions/$UUID
+        unzip -q $ARCHIVO -d "$HOMEDIR"/.local/share/gnome-shell/extensions/$UUID/
+    done
+    chown -R "$USER":"$USER" "$HOMEDIR"/.local/share/gnome-shell/extensions/
+    rm -rf "$HOMEDIR"/Extensiones/
 }
 ####################################################################################
 
@@ -175,12 +204,5 @@ menu () {
 config_sys
 
 menu
-
-# Script configuracion desktop
-HOMEDIR=`grep "1001" /etc/passwd | awk -F : '{ print $6 }'`
-USER=`grep "1001" /etc/passwd | awk -F : '{ print $1 }'`
-mv 4_config_desktop.sh "$HOMEDIR"
-chmod +x "$HOMEDIR/"4_config_desktop.sh
-chown "$USER" "$HOMEDIR/"4_config_desktop.sh
 
 reboot
