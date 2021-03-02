@@ -13,19 +13,19 @@ gnome () {
     # dconf write /org/gnome/desktop/interface/gtk-theme "'Qogir-manjaro-win-dark'"
 
     ############################################## Extensiones ##################################################################################
+    # User themes
+    dconf write /org/gnome/shell/enabled-extensions "['user-theme@gnome-shell-extensions.gcampax.  github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com']"
+    
     # ArcMenu
-    dconf write /org/gnome/shell/enabled-extensions "['arcmenu@arcmenu.com']"
+    dconf write /org/gnome/shell/enabled-extensions "['user-theme@gnome-shell-extensions.gcampax.  github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'arcmenu@arcmenu.com']"
     dconf write /org/gnome/shell/extensions/arcmenu/available-placement "[true, false, false]"
     dconf write /org/gnome/mutter/overlay-key "'Super_L'"
     dconf write /org/gnome/desktop/wm/keybindings/panel-main-menu "['<Alt>F1']"
     dconf write /org/gnome/shell/extensions/arcmenu/pinned-app-list "['Web', '', 'org.gnome.Epiphany.desktop', 'Terminal', '', 'org.gnome.Terminal. desktop', 'ArcMenu Settings', 'ArcMenu_ArcMenuIcon', 'gnome-extensions prefs arcmenu@arcmenu.com']"
     dconf write /org/gnome/shell/extensions/arcmenu/menu-hotkey "'Super_L'"
     
-    # User themes
-    dconf write /org/gnome/shell/enabled-extensions "['arcmenu@arcmenu.com', 'user-theme@gnome-shell-extensions.gcampax.  github.com']"
-
     # Dash to Dock
-    dconf write /org/gnome/shell/enabled-extensions "['arcmenu@arcmenu.com', 'user-theme@gnome-shell-extensions.gcampax.  github.com', 'dash-to-dock@micxgx.gmail.com']"
+    dconf write /org/gnome/shell/enabled-extensions "['user-theme@gnome-shell-extensions.gcampax.  github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'arcmenu@arcmenu.com', 'dash-to-dock@micxgx.gmail.com']"
     dconf write /org/gnome/shell/extensions/arcmenu/available-placement "[false, false, true]"
     dconf write /org/gnome/shell/extensions/dash-to-dock/preferred-monitor 0
     dconf write /org/gnome/shell/extensions/dash-to-dock/dock-position "'BOTTOM'"
@@ -39,7 +39,7 @@ gnome () {
     dconf write /org/gnome/shell/extensions/dash-to-dock/max-alpha 0.60
     
     # Drop down Terminal
-    dconf write /org/gnome/shell/enabled-extensions "['arcmenu@arcmenu.com', 'user-theme@gnome-shell-extensions.gcampax.  github.com', 'dash-to-dock@micxgx.gmail.com', 'drop-down-terminal-x@bigbn.pro']"
+    dconf write /org/gnome/shell/enabled-extensions "['user-theme@gnome-shell-extensions.gcampax.  github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'arcmenu@arcmenu.com', 'dash-to-dock@micxgx.gmail.com', 'drop-down-terminal-x@bigbn.pro']"
     dconf write /pro/bigbn/drop-down-terminal-x/other-shortcut "['F12']"
     dconf write /pro/bigbn/drop-down-terminal-x/enable-tabs true
     dconf write /pro/bigbn/drop-down-terminal-x/use-default-colors true
@@ -53,13 +53,13 @@ gnome () {
     dconf write /org/gnome/mutter/center-new-windows true
 
     # Tema
-    dconf write /org/gnome/desktop/interface/gtk-theme "'Prof-Gnome-Dark'"
-    dconf write /org/gnome/shell/extensions/user-theme/name "'Prof-Gnome-Dark'"
+    dconf write /org/gnome/desktop/interface/gtk-theme "'Prof-Gnome-Dark-3.6'"
+    dconf write /org/gnome/shell/extensions/user-theme/name "'Prof-Gnome-Dark-3.6'"
     dconf write /org/gnome/desktop/interface/cursor-theme "'Qogir-manjaro-dark'"
     dconf write /org/gnome/desktop/interface/icon-theme "'Qogir-manjaro-dark'"
 
     # Wallpaper
-    dconf write /org/gnome/desktop/background/picture-uri "'file:///usr/share/backgrounds/Landscapes/landscapes%2023.jpg'"
+    dconf write /org/gnome/desktop/background/picture-uri "'file:///usr/local/share/backgrounds/wallpapers/Varios/varios%2031.png'"
 
     # Establecer fuentes
     dconf write /org/gnome/desktop/interface/font-name "'Ubuntu 11'"
