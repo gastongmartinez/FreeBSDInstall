@@ -9,13 +9,36 @@ chown "$USER" "$HOMEDIR/"4_config_desktop.sh
 #################################################################################
 
 ################################ Wallpapers #####################################
-git clone https://github.com/gastongmartinez/wallpapers.git
-WALL="/usr/local/share/backgrounds/"
-if [[ ! -d "$WALL" ]];
-then
-    mkdir "$WALL"
-fi
-mv -f wallpapers/ "$WALL"
+wallpapers () {
+    git clone https://github.com/gastongmartinez/wallpapers.git
+    WALL="/usr/local/share/backgrounds/"
+    if [[ ! -d "$WALL" ]];
+    then
+        mkdir "$WALL"
+    fi
+    mv -f wallpapers/ "$WALL"
+}
+#################################################################################
+
+################################## Iconos #######################################
+iconos () {
+    echo -e "\nInstalando iconos..."
+    for ICON in ./Iconos/*.xz
+    do
+        tar -xf "$ICON" -C /usr/local/share/icons/
+    done
+}
+#################################################################################
+
+
+################################ Temas GTK ######################################
+temasGTK () {
+    echo -e "\nInstalando temas GTK..."
+    for TEMA in ./TemasGTK/*.xz
+    do
+        tar -xf "$TEMA" -C /usr/local/share/themes/
+    done
+}
 #################################################################################
 
 ################# Configuracion General para Desktops ###########################
