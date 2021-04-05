@@ -9,31 +9,36 @@ pkg -y
 pkg update
 pkg upgrade
 
-# Instalar sudo y nano
+# Instalar sudo, nano y bash
 pkg install -y sudo
 pkg install -y nano
+pkg install -y bash
 
 # Habilitar Wheel en sudo
-echo -e "%wheel ALL=(ALL) ALL\n" >> /usr/local/etc/sudoers.d/admin
+echo "%wheel ALL=(ALL) ALL" >> /usr/local/etc/sudoers.d/admin
 
 # Instalar Xorg
 pkg install -y xdg-user-dirs
 pkg install -y xorg
 
-KB="/usr/local/etc/X11/xorg.conf.d/keyboard.conf"
-echo -e 'Section "InputClass"' > $KB
-echo -e '\tIdentifier "KeyboardDefaults"' >> $KB
-echo -e '\tMatchIsKeyboard "on"' >> $KB
-echo -e '\tOption "XkbLayout" "es"' >> $KB
-echo -e '\tOption "XkbVariant" "winkeys"' >> $KB
-echo -e 'EndSection' >> $KB
+{
+    echo 'Section "InputClass"'
+    printf "\t%s\n" 'Identifier "KeyboardDefaults"'
+    printf "\t%s\n" 'MatchIsKeyboard "on"'
+    printf "\t%s\n" 'Option "XkbLayout" "es"'
+    printf "\t%s\n" 'Option "XkbVariant" "winkeys"'
+    echo 'EndSection'
+} >> /usr/local/etc/X11/xorg.conf.d/keyboard.conf
 
-# Drivers VMWARE 
-read -p "Se instala en maquina virtual (S/N): " MV
-if [ "${MV}" == "S" ];
+
+# Drivers VMWARE
+printf "Se instala en maquina virtual (S/N): " 
+read -r MV
+if [ "$MV" = "S" ];
 then
-    read -p "Indicar plataforma virtual 1=VirtualBox - 2=VMWare: " PLAT
-    if [ "${PLAT}" -eq 1 ] 2>/dev/null;
+    print "Indicar plataforma virtual 1=VirtualBox - 2=VMWare: "
+    read -r PLAT
+    if [ "$PLAT" -eq 1 ] 2>/dev/null;
     then
         # VirtualBox Guest utils
         pkg install -y emulators/virtualbox-ose-additions
@@ -52,20 +57,22 @@ then
         sysrc vmware_guest_vmxnet_enable="YES"
         sysrc vmware_guestd_enable="YES"
         # Configuracion loader.conf
-        echo -e 'fuse_load="YES"' >> /boot/loader.conf
+        echo 'fuse_load="YES"' >> /boot/loader.conf
         # Configuracion fstab
         mkdir /mnt/hgfs
-        echo -e '.host:/\t/mnt/hgfs\tvmhgfs-fuse\tfailok,rw,allow_other,mountprog=/usr/local/bin/vmhgfs-fuse\t0\t0' >> /etc/fstab
+        printf "%s\t%s\t%s\t%s\t%s\t%s\n" ".host:/" "/mnt/hgfs" "vmhgfs-fuse" "failok,rw,allow_other,mountprog=/usr/local/bin/vmhgfs-fuse" "0" "0" >> /etc/fstab
     fi
 fi
 
-read -p "Desea instalar los drivers de video Intel? (S/N): " VI
-if [ "${VI}" == "S" ];
+printf "Desea instalar los drivers de video Intel? (S/N): "
+read -r VI
+if [ "$VI" = "S" ];
 then
     pkg install -y xf86-video-intel
 fi
-read -p "Desea instalar los drivers de video AMD? (S/N): " VA
-if [ "${VA}" == "S" ];
+printf "Desea instalar los drivers de video AMD? (S/N): "
+read -r VA
+if [ "$VA" = "S" ];
 then
     pkg install -y xf86-video-amdgpu
 fi
