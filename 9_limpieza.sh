@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/local/bin/bash
 
 if [ "$0" != "sh" ];
 then
@@ -7,7 +7,7 @@ then
    exit 1
 fi
 
-VERIF=`pwd | grep FreeBSDInstall`
+VERIF=$(pwd | grep FreeBSDInstall)
 if [ -n "$VERIF" ];
 then
     echo -e "\nADVERTENCIA!!!\n"
@@ -15,15 +15,15 @@ then
     echo -e "ADVERTENCIA!!!\n"
     echo -e "Este script eliminara el directorio donde esta ubicado con todo su contenido.\n"
 
-    read -p "Desea proceder? (S/N): " SN
+    read -rp "Desea proceder? (S/N): " SN
     if [ "${SN}" == "S" ];
     then
         # Eliminar archivo de configuracion de usuario
-        HOMEDIR=`grep "1001" /etc/passwd | awk -F : '{ print $6 }'`
+        HOMEDIR=$(grep "1001" /etc/passwd | awk -F : '{ print $6 }')
         rm -f "$HOMEDIR/"4_config_desktop.sh
         # Eliminar repositorio FreeBSDInstall
-        rm -rf "`pwd`"
-        cd ~
+        rm -rf "$(pwd)"
+        cd "$HOME" || exit
     fi
 else
     echo -e "\nADVERTENCIA!!!\n"

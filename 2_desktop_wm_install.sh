@@ -1,8 +1,10 @@
 #!/usr/local/bin/bash
 
+pkg install -y git
+
 ############ Archivos de configuracion de entorno de usuario ####################
-HOMEDIR=`grep "1001" /etc/passwd | awk -F : '{ print $6 }'`
-USER=`grep "1001" /etc/passwd | awk -F : '{ print $1 }'`
+HOMEDIR=$(grep "1001" /etc/passwd | awk -F : '{ print $6 }')
+USER=$(grep "1001" /etc/passwd | awk -F : '{ print $1 }')
 mv -f 4_config_desktop.sh "$HOMEDIR"
 chmod +x "$HOMEDIR/"4_config_desktop.sh
 chown "$USER" "$HOMEDIR/"4_config_desktop.sh
@@ -52,22 +54,22 @@ temasGTK () {
 
 ############################## Theming ##########################################
 personalizacion () {
-    read -p "Desea instalar temas para la personalizacion del escritorio (S/N): " TEM
+    read -rp "Desea instalar temas para la personalizacion del escritorio (S/N): " TEM
     if [ "${TEM}" == "S" ];
     then
         OPCIONES="Wallpapers Iconos TemasGTK Salir"
         echo -e "\nSeleccione los recursos a instalar:"
         select OP in $OPCIONES;
         do
-            if [ $OP == "Wallpapers" ];
+            if [ "$OP" == "Wallpapers" ];
             then
                 sleep 2
                 wallpapers
-            elif [ $OP == "Iconos" ];
+            elif [ "$OP" == "Iconos" ];
             then
                 sleep 2
                 iconos
-            elif [ $OP == "TemasGTK" ];
+            elif [ "$OP" == "TemasGTK" ];
             then
                 sleep 2
                 temasGTK
@@ -91,8 +93,8 @@ config_sys () {
     sysrc hald_enable="YES"
 
     # ProcFS FSTAB
-    PROC=`grep "procfs" /etc/fstab`
-    if [ -z $PROC ];
+    PROC=$(grep "procfs" /etc/fstab)
+    if [ -z "$PROC" ];
     then
         echo -e 'proc\t/proc\tprocfs\trw\t0\t0' >> /etc/fstab
     fi
@@ -101,8 +103,8 @@ config_sys () {
 
 ################################ LIGHTDM #########################################
 lightdm () {
-    read -p "Desea instalar lightdm (S/N): " LDM
-    if [ "${LDM}" == "S" ];
+    read -rp "Desea instalar lightdm (S/N): " LDM
+    if [ "$LDM" == "S" ];
     then
         pkg install -y lightdm
         pkg install -y lightdm-gtk-greeter
@@ -132,29 +134,33 @@ gnome () {
     sysrc gnome_enable="YES"
 
     # Idioma
-    LG="/usr/local/etc/gdm/locale.conf"
-    echo -e 'LANG="es_AR.UTF-8"' > $LG
-    echo -e 'LC_CTYPE="es_AR.UTF-8"' >> $LG
-    echo -e 'LC_MESSAGES="es_AR.UTF-8"' >> $LG
+    {
+        echo -e 'LANG="es_AR.UTF-8"\n'
+        echo -e 'LC_CTYPE="es_AR.UTF-8"\n'
+        echo -e 'LC_MESSAGES="es_AR.UTF-8"\n'
+    } >> /usr/local/etc/gdm/locale.conf
+    
 
     # GDM
     pkg install -y gdm
     sysrc gdm_enable="YES"
     # Idioma teclado GDM
-    KB="/usr/local/share/gdm/greeter/autostart/keyboard.desktop"
-    echo -e "[Desktop Entry]" > $KB
-    echo -e "Type=Application" >> $KB
-    echo -e "Name=Set Login Keyboard" >> $KB
-    echo -e "Exec=/usr/local/bin/setxkbmap -display :0 'es'" >> $KB
-    echo -e "NoDisplay=true" >> $KB
+    {
+        echo -e "[Desktop Entry]\n"
+        echo -e "Type=Application\n"
+        echo -e "Name=Set Login Keyboard\n"
+        echo -e "Exec=/usr/local/bin/setxkbmap -display :0 'es'\n"
+        echo -e "NoDisplay=true\n"
+    } >> /usr/local/share/gdm/greeter/autostart/keyboard.desktop
+    
 
     # Extensiones
     mv Extensiones "$HOMEDIR/"
     for ARCHIVO in "$HOMEDIR"/Extensiones/*.zip
     do
-        UUID=`unzip -c $ARCHIVO metadata.json | grep uuid | cut -d \" -f4`
-        mkdir -p "$HOMEDIR"/.local/share/gnome-shell/extensions/$UUID
-        unzip -q $ARCHIVO -d "$HOMEDIR"/.local/share/gnome-shell/extensions/$UUID/
+        UUID=$(unzip -c "$ARCHIVO" metadata.json | grep uuid | cut -d \" -f4)
+        mkdir -p "$HOMEDIR"/.local/share/gnome-shell/extensions/"$UUID"
+        unzip -q "$ARCHIVO" -d "$HOMEDIR"/.local/share/gnome-shell/extensions/"$UUID"/
     done
     chown -R "$USER":"$USER" "$HOMEDIR"/.local/
     rm -rf "$HOMEDIR"/Extensiones/
@@ -172,8 +178,8 @@ xfce () {
 
 ################################### KDE ############################################
 kde () {
-    read -p "Desea instalar SDDM (S/N): " DM
-    if [ "${DM}" == "S" ];
+    read -rp "Desea instalar SDDM (S/N): " DM
+    if [ "$DM" == "S" ];
     then
         pkg install -y sddm
         sysrc sddm_enable="YES"
@@ -214,47 +220,61 @@ qtile () {
     pkg install -y lxappearance
     pkg install -y qtile
 
-    XS="/usr/local/share/xsessions/qtile.desktop"
-    echo -e '[Desktop Entry]' > $XS
-    echo -e 'Name=Qtile' >> $XS
-    echo -e 'Comment=Qtile Session' >> $XS
-    echo -e 'Exec=qtile start' >> $XS
-    echo -e 'Type=Application' >> $XS
-    echo -e 'Keywords=wm;tiling' >> $XS
+    {
+        echo -e '[Desktop Entry]\n'
+        echo -e 'Name=Qtile\n'
+        echo -e 'Comment=Qtile Session\n'
+        echo -e 'Exec=qtile start\n'
+        echo -e 'Type=Application\n'
+        echo -e 'Keywords=wm;tiling\n'
+    } >> /usr/local/share/xsessions/qtile.desktop
+    
+}
+##################################################################################
+
+############################### Awesome ##########################################
+awesome () {
+    pkg install -y awesome
+    pkg install -y awesome-vicious     
 }
 ##################################################################################
 
 ################################# MENU ###########################################
 menu () {
-    ESCRITORIOS="GNOME XFCE Mate KDE Qtile Salir"
+    ESCRITORIOS="GNOME XFCE Mate KDE Qtile Awesome Salir"
     echo -e "\nSeleccione el escritorio o window manager a instalar:"
     select escritorio in $ESCRITORIOS;
     do
-        if [ $escritorio == "GNOME" ];
+        if [ "$escritorio" == "GNOME" ];
         then
             echo -e "\nInstalando $escritorio"
             sleep 2
             gnome
-        elif [ $escritorio == "XFCE" ];
+        elif [ "$escritorio" == "XFCE" ];
         then
             echo -e "\nInstalando $escritorio"
             sleep 2
             xfce
-        elif [ $escritorio == "Mate" ];
+        elif [ "$escritorio" == "Mate" ];
         then
             echo -e "\nInstalando $escritorio"
             sleep 2
             mate
-        elif [ $escritorio == "KDE" ];
+        elif [ "$escritorio" == "KDE" ];
         then
             echo -e "\nInstalando $escritorio"
             sleep 2
             kde
-        elif [ $escritorio == "Qtile" ];
+        elif [ "$escritorio" == "Qtile" ];
         then
             echo -e "\nInstalando $escritorio"
             sleep 2
             qtile
+        elif [ "$escritorio" == "Awesome" ];
+        then
+            echo -e "\nInstalando $escritorio"
+            sleep 2
+            awesome
         else
             break
         fi
