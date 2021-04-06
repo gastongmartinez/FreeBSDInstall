@@ -75,6 +75,7 @@ read -r VA
 if [ "$VA" = "S" ];
 then
     pkg install -y xf86-video-amdgpu
+    pkg install -y xf86-video-ati
 fi
 
 # Establecer locale global
