@@ -13,7 +13,7 @@ chown "$USER" "$HOMEDIR/"4_config_desktop.sh
 
 ############################### Cambio de shell #################################
 # ROOT
-chsh -s /bin/sh
+# chsh -s /bin/sh
 # UUID 1001
 chsh -s /usr/local/bin/bash "$USER"
 #################################################################################
