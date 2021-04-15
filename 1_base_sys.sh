@@ -36,7 +36,7 @@ printf "Se instala en maquina virtual (S/N): "
 read -r MV
 if [ "$MV" = "S" ];
 then
-    print "Indicar plataforma virtual 1=VirtualBox - 2=VMWare: "
+    printf "Indicar plataforma virtual 1=VirtualBox - 2=VMWare: "
     read -r PLAT
     if [ "$PLAT" -eq 1 ] 2>/dev/null;
     then
