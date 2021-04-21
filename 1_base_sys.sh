@@ -5,7 +5,7 @@ freebsd-update fetch
 freebsd-update install
 
 # Instalar y actualizar pkg
-pkg -y
+pkg
 pkg update
 pkg upgrade
 
@@ -79,6 +79,8 @@ then
 fi
 
 # Establecer locale global
-sed -i '' '1,/umask=022:/ s/umask=022:/umask=022:\\\n\t:charset=UTF-8:\\\n\t:lang=es_AR.UTF-8:/' "/etc/login.conf"
+# sed -i '' '1,/umask=022:/ s/umask=022:/umask=022:\\\n\t:charset=UTF-8:\\\n\t:lang=es_AR.UTF-8:/' "/etc/login.conf" ## FreeBSD 12
+sed -i '' '1,/lang=C.UTF-8:/ s/lang=C.UTF-8:/lang=es_AR.UTF-8:/' "/etc/login.conf" ## FreeBSD 13
+cap_mkdb /etc/login.conf
 
 reboot 

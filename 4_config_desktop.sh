@@ -83,26 +83,20 @@ gnome () {
     # En 30 minutos con bateria
     dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout 1800
 
-    # Autostart Apps
-    #if [ ! -d ~/.config/autostart ]; then
-    #    mkdir -p ~/.config/autostart
-    #fi
-    #cp /usr/share/applications/plank.desktop ~/.config/autostart/    
 }
 
 mate () {
     # Tema
-    #gsettings set org.mate.interface gtk-theme 'Nordic'
-    #gsettings set org.mate.interface gtk-theme 'Qogir-manjaro-win-dark'
-    #gsettings set org.mate.Marco.general theme 'Qogir-manjaro-dark'
-    #gsettings set org.mate.interface icon-theme 'Qogir-manjaro-dark'
-    #gsettings set org.mate.peripherals-mouse cursor-theme 'Qogir-manjaro-dark'
+    gsettings set org.mate.interface gtk-theme 'Qogir-win-dark'
+    gsettings set org.mate.Marco.general theme 'Qogir-manjaro-dark'
+    gsettings set org.mate.interface icon-theme 'Qogir-manjaro-dark'
+    gsettings set org.mate.peripherals-mouse cursor-theme 'Qogir-manjaro-dark'
 
     # Remover panel inferior
     dconf write /org/mate/panel/general/toplevel-id-list "['top']"
 
     # Wallpaper
-    #gsettings set org.mate.background picture-filename "/SOME/PATH/IMAGE.jpg"
+    gsettings set org.mate.background picture-filename '/usr/local/share/backgrounds/wallpapers/Varios/varios 31.png'
 
     # Caja: vista de detalles
     gsettings set org.mate.caja.preferences default-folder-viewer 'list-view'
@@ -145,7 +139,6 @@ mate () {
         mkdir -p ~/.config/autostart
     fi
     cp /usr/local/share/applications/plank.desktop ~/.config/autostart/
-    cp /usr/local/share/applications/albert.desktop ~/.config/autostart/
 }
 
 xfce () {

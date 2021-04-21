@@ -123,6 +123,9 @@ mate () {
     pkg install -y mate
     pkg install -y mate-common
     pkg install -y brisk-menu
+
+    echo "exec mate-session" >> "$HOMEDIR/".xinitrc
+    chown "$USER" "$HOMEDIR/".xinitrc
 }
 ##################################################################################
 
